@@ -1,0 +1,20 @@
+node('slave_golang') {
+    stage('Checkout') {
+        sh 'go version'
+        checkout scm
+    }      
+    stage('Pre Test') {
+        echo 'Installing dependencies'
+        sh 'go version'
+        sh 'go get -u golang.org/x/lint/golint'
+    }
+
+    stage('Test') {
+        echo 'Running vetting'
+        sh 'go vet ./...'
+        echo 'Running linting'
+        sh 'go lint ./...'
+        echo 'Running test'
+        sh 'go test ./...'
+    }
+}
